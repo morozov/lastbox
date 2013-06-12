@@ -1,0 +1,17 @@
+{
+    "name": "morozov/lastbox",
+    "description": "Last.FM Loved Track Downloader",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Sergei Morozov",
+            "email": "morozov@tut.by"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "LastBox": "src/"
+        },
+        "classmap": ["last.fm/lastfmapi"]
+    }
+}

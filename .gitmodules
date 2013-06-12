@@ -1,0 +1,3 @@
+[submodule "last.fm"]
+	path = last.fm
+	url = git://github.com/matto1990/PHP-Last.fm-API.git

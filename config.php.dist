@@ -1,0 +1,8 @@
+<?php
+
+return array(
+    'last.fm' => array(
+        'api_key'  => '',
+        'username' => '',
+    ),
+);
