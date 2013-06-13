@@ -89,13 +89,13 @@ class LastFM
      * Calls the given function and handles the result. Throw exception in case
      * if error occurred
      *
-     * @param callable  $function Function to call
+     * @param \Closure  $function Function to call
      * @param lastfmApi $api      The API object to retrieve error from
      *
      * @return array
      * @throws RuntimeException
      */
-    protected function call(callable $function, lastfmApi $api)
+    protected function call(\Closure $function, lastfmApi $api)
     {
         $result = call_user_func($function);
 
