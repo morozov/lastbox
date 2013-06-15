@@ -8,6 +8,9 @@
             "email": "morozov@tut.by"
         }
     ],
+    "require" : {
+        "ailove-dev/vk-php-sdk": "dev-master"
+    },
     "autoload": {
         "psr-0": {
             "LastBox": "src/"
