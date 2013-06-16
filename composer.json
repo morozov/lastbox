@@ -9,7 +9,8 @@
         }
     ],
     "require" : {
-        "ailove-dev/vk-php-sdk": "dev-master"
+        "ailove-dev/vk-php-sdk": "dev-master",
+        "benthedesigner/dropbox": "dev-master"
     },
     "autoload": {
         "psr-0": {

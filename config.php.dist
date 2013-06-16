@@ -8,4 +8,9 @@ return array(
     'vk' => array(
         'access_token' => '',
     ),
+    'dropbox' => array(
+        'api_key'      => '',
+        'api_secret'   => '',
+        'access_token' => '',
+    ),
 );
