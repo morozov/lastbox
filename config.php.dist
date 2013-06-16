@@ -2,10 +2,16 @@
 
 return array(
     'last.fm' => array(
-        'api_key'  => '',
+        'api_key' => '',
         'username' => '',
     ),
     'vk' => array(
         'access_token' => '',
+    ),
+    'dropbox' => array(
+        'api_key' => '',
+        'api_secret' => '',
+        'access_token' => '',
+        'access_token_secret' => '',
     ),
 );

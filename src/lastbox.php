@@ -28,3 +28,15 @@ $track = array_shift($tracks);
 $vk = new \LastBox\Adapter\Vk($config['vk']['access_token']);
 $url = $vk->getTrackUrl($track['artist']['name'], $track['name']);
 print_r($url);
+
+$dropbox = new \LastBox\Adapter\Dropbox(
+    $config['dropbox']['api_key'],
+    $config['dropbox']['api_secret'],
+    $config['dropbox']['access_token'],
+    $config['dropbox']['access_token_secret']
+);
+
+$stream = fopen($url, 'rb');
+$path = '/Lastbox/' . basename($url);
+$result = $dropbox->store($stream, $path);
+print_r($result);
