@@ -55,7 +55,7 @@ class LastFM
 
         $api = new lastfmApi();
         $this->userApi = $this->call(
-            function () use ($api, $authApi) {
+            function (lastfmApi $api) use ($authApi) {
                 return $api->getPackage($authApi, 'user');
             },
             $api
@@ -74,7 +74,7 @@ class LastFM
     {
         $api = $this->userApi;
         return $this->call(
-            function () use ($api, $username) {
+            function (lastfmApi $api) use ($username) {
                 return $api->getLovedTracks(
                     array(
                         'user' => $username,
@@ -97,7 +97,7 @@ class LastFM
      */
     protected function call(\Closure $function, lastfmApi $api)
     {
-        $result = call_user_func($function);
+        $result = call_user_func($function, $api);
 
         if (!$result) {
             $error = $api->error;
