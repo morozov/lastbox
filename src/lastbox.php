@@ -12,24 +12,24 @@
  * @link      http://github.com/morozov/lastbox
  */
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-if (is_file(__DIR__ . '/../config.php')) {
-    $config = include __DIR__ . '/../config.php';
-} else {
-    $config = include __DIR__ . '/../config.php.dist';
-}
+$container = new ContainerBuilder();
+$loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/..'));
+$loader->load('services.xml');
+$loader->load('config.xml');
 
-$lastFM = new \LastBox\Adapter\LastFM($config['last.fm']['api_key']);
-$vk = new \LastBox\Adapter\Vk($config['vk']['access_token']);
-$dropbox = new \LastBox\Adapter\Dropbox(
-    $config['dropbox']['api_key'],
-    $config['dropbox']['api_secret'],
-    $config['dropbox']['access_token'],
-    $config['dropbox']['access_token_secret']
+$lastFM = $container->get('lastfm.adapter');
+$vk = $container->get('vk.adapter');
+$dropbox = $container->get('dropbox.adapter');
+
+$tracks = $lastFM->getLovedTracks(
+    $container->getParameter('lastfm.username')
 );
-
-$tracks = $lastFM->getLovedTracks($config['last.fm']['username']);
 print_r($tracks);
 
 while ($track = array_shift($tracks)) {

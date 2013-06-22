@@ -14,11 +14,7 @@
 
 namespace LastBox\Adapter;
 
-use Dropbox\AccessToken;
-use Dropbox\AccessType;
-use Dropbox\AppInfo;
 use Dropbox\Client;
-use Dropbox\Config;
 use Dropbox\WriteMode;
 
 /**
@@ -43,23 +39,11 @@ class Dropbox
     /**
      * Constructor
      *
-     * @param string $consumerKey    Consumer key
-     * @param string $consumerSecret Consumer secret
-     * @param string $token          Access token
-     * @param string $tokenSecret    Access token secret
+     * @param Client $client Dropbox API client
      */
-    public function __construct($consumerKey, $consumerSecret, $token, $tokenSecret)
+    public function __construct(Client $client)
     {
-        $appInfo = new AppInfo(
-            $consumerKey,
-            $consumerSecret,
-            AccessType::FullDropbox()
-        );
-
-        $accessToken = new AccessToken($token, $tokenSecret);
-
-        $config = new Config($appInfo, 'LastBox');
-        $this->client = new Client($config, $accessToken);
+        $this->client = $client;
     }
 
     /**

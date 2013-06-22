@@ -39,12 +39,11 @@ class Vk
     /**
      * Constructor
      *
-     * @param string $accessToken VK API access token
+     * @param VkPhpSdk $sdk VK API SDK
      */
-    public function __construct($accessToken)
+    public function __construct(VkPhpSdk $sdk)
     {
-        $sdk = $this->sdk = new VkPhpSdk();
-        $sdk->setAccessToken($accessToken);
+        $this->sdk = $sdk;
     }
 
     /**

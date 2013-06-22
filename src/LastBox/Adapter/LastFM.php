@@ -16,6 +16,7 @@ namespace LastBox\Adapter;
 
 use lastfmApi;
 use lastfmApiAuth;
+use lastfmApiUser;
 use RuntimeException;
 
 /**
@@ -40,20 +41,13 @@ class LastFM
     /**
      * Constructor
      *
-     * @param string $apiKey Last.FM API key
+     * @param lastfmApi     $api     Last.FM API
+     * @param lastfmApiAuth $authApi Last.FM authentication API
      *
      * @throws RuntimeException
      */
-    public function __construct($apiKey)
+    public function __construct(lastfmApi $api, lastfmApiAuth $authApi)
     {
-        $authApi = new lastfmApiAuth(
-            'setsession',
-            array(
-                'apiKey' => $apiKey,
-            )
-        );
-
-        $api = new lastfmApi();
         $this->userApi = $this->call(
             function (lastfmApi $api) use ($authApi) {
                 return $api->getPackage($authApi, 'user');
@@ -74,7 +68,7 @@ class LastFM
     {
         $api = $this->userApi;
         return $this->call(
-            function (lastfmApi $api) use ($username) {
+            function (lastfmApiUser $api) use ($username) {
                 return $api->getLovedTracks(
                     array(
                         'user' => $username,

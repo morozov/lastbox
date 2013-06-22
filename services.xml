@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="lastfm.auth_api_vars" type="collection">
+            <parameter key="apiKey">%lastfm.api_key%</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+        <service id="lastfm.api" class="lastfmApi"/>
+        <service id="lastfm.auth_api" class="lastfmApiAuth">
+            <argument>setsession</argument>
+            <argument>%lastfm.auth_api_vars%</argument>
+        </service>
+        <service id="lastfm.adapter" class="LastBox\Adapter\LastFM">
+            <argument type="service" id="lastfm.api"/>
+            <argument type="service" id="lastfm.auth_api"/>
+        </service>
+        <service id="vk.adapter" class="LastBox\Adapter\Vk">
+            <argument type="service" id="vk.sdk" />
+        </service>
+        <service id="vk.sdk" class="VkPhpSdk">
+            <call method="setAccessToken">
+                <argument>%vk.access_token%</argument>
+            </call>
+        </service>
+        <service id="dropbox.access_type_factory" class="Dropbox\AccessType"/>
+        <service id="dropbox.access_type" factory-class="Dropbox\AccessType" factory-method="FullDropbox"/>
+        <service id="dropbox.app_info" class="Dropbox\AppInfo">
+            <argument>%dropbox.api_key%</argument>
+            <argument>%dropbox.api_secret%</argument>
+            <argument type="service" id="dropbox.access_type" />
+        </service>
+        <service id="dropbox.access_token" class="Dropbox\AccessToken">
+            <argument>%dropbox.access_token%</argument>
+            <argument>%dropbox.access_token_secret%</argument>
+        </service>
+        <service id="dropbox.config" class="Dropbox\Config">
+            <argument type="service" id="dropbox.app_info" />
+            <argument>LastBox</argument>
+        </service>
+        <service id="dropbox.client" class="Dropbox\Client">
+            <argument type="service" id="dropbox.config"/>
+            <argument type="service" id="dropbox.access_token"/>
+        </service>
+        <service id="dropbox.adapter" class="LastBox\Adapter\Dropbox">
+            <argument type="service" id="dropbox.client"/>
+        </service>
+    </services>
+
+</container>
