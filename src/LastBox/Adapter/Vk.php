@@ -65,8 +65,8 @@ class Vk
             )
         );
 
-        if (!isset($result['response'])) {
-            throw new RuntimeException('VK response is malformed');
+        if (!isset($result['response']) || !is_array($result['response'])) {
+            throw new RuntimeException('Response is malformed');
         }
 
         $response = $result['response'];
@@ -75,6 +75,10 @@ class Vk
 
         if (!$result) {
             return null;
+        }
+
+        if (!isset($result['url'])) {
+            throw new RuntimeException('Response doesn\'t contain URL');
         }
 
         return $result['url'];
