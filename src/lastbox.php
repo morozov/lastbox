@@ -26,22 +26,34 @@ $loader->load('config.xml');
 $lastFM = $container->get('lastfm.adapter');
 $vk = $container->get('vk.adapter');
 $dropbox = $container->get('dropbox.adapter');
+$repository = $container->get('repository');
 
 $tracks = $lastFM->getLovedTracks(
     $container->getParameter('lastfm.username')
 );
 
 while ($track = array_shift($tracks)) {
-    echo sprintf("%s - %s", $track['artist']['name'], $track['name']), PHP_EOL;
-    $url = $vk->getTrackUrl($track['artist']['name'], $track['name']);
-    if ($url) {
-        echo $url, PHP_EOL;
-        $stream = fopen($url, 'rb');
-        if ($stream) {
-            $path = '/Lastbox/' . basename($url);
-            $result = $dropbox->store($stream, $path);
-            print_r($result);
-        }
-        break;
+    if ($track['mbid']) {
+        echo sprintf("%s - %s", $track['artist']['name'], $track['name']), PHP_EOL;
+        $repository->addTrack(
+            array(
+                'id' => $track['mbid'],
+                'artist' => $track['artist']['name'],
+                'title' => $track['name'],
+                'date' => $track['date'],
+            )
+        );
+
+        /*$url = $vk->getTrackUrl($track['artist']['name'], $track['name']);
+        if ($url) {
+            echo $url, PHP_EOL;
+            $stream = fopen($url, 'rb');
+            if ($stream) {
+                $path = '/Lastbox/' . basename($url);
+                $result = $dropbox->store($stream, $path);
+                print_r($result);
+            }
+            break;
+        }*/
     }
 }

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `track` (
   `url` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `date` (`date`)
-);
+) CHARSET=utf8;
 
 -- SQLite
 CREATE TABLE `track` (
