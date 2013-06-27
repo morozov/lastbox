@@ -27,24 +27,9 @@
                 <argument>%vk.access_token%</argument>
             </call>
         </service>
-        <service id="dropbox.access_type_factory" class="Dropbox\AccessType"/>
-        <service id="dropbox.access_type" factory-class="Dropbox\AccessType" factory-method="FullDropbox"/>
-        <service id="dropbox.app_info" class="Dropbox\AppInfo">
-            <argument>%dropbox.api_key%</argument>
-            <argument>%dropbox.api_secret%</argument>
-            <argument type="service" id="dropbox.access_type" />
-        </service>
-        <service id="dropbox.access_token" class="Dropbox\AccessToken">
-            <argument>%dropbox.access_token%</argument>
-            <argument>%dropbox.access_token_secret%</argument>
-        </service>
-        <service id="dropbox.config" class="Dropbox\Config">
-            <argument type="service" id="dropbox.app_info" />
-            <argument>LastBox</argument>
-        </service>
         <service id="dropbox.client" class="Dropbox\Client">
-            <argument type="service" id="dropbox.config"/>
-            <argument type="service" id="dropbox.access_token"/>
+            <argument>%dropbox.access_token%</argument>
+            <argument>LastBox</argument>
         </service>
         <service id="dropbox.adapter" class="LastBox\Adapter\Dropbox">
             <argument type="service" id="dropbox.client"/>
