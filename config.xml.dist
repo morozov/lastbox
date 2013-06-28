@@ -7,10 +7,7 @@
         <parameter key="lastfm.api_key"></parameter>
         <parameter key="lastfm.username"></parameter>
         <parameter key="vk.access_token"></parameter>
-        <parameter key="dropbox.api_key"></parameter>
-        <parameter key="dropbox.api_secret"></parameter>
         <parameter key="dropbox.access_token"></parameter>
-        <parameter key="dropbox.access_token_secret"></parameter>
     </parameters>
 
 </container>

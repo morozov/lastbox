@@ -23,7 +23,7 @@ class VkTest extends PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
-    public function testMalformedResponse2()
+    public function testMatchesFound()
     {
         $result = $this->call(
             array(
@@ -41,7 +41,7 @@ class VkTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException RuntimeException
      */
-    public function testMatchesFound()
+    public function testMalformedResponse2()
     {
         $this->call(
             array(

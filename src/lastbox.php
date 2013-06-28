@@ -30,9 +30,9 @@ $dropbox = $container->get('dropbox.adapter');
 $tracks = $lastFM->getLovedTracks(
     $container->getParameter('lastfm.username')
 );
-print_r($tracks);
 
 while ($track = array_shift($tracks)) {
+    echo sprintf("%s - %s", $track['artist']['name'], $track['name']), PHP_EOL;
     $url = $vk->getTrackUrl($track['artist']['name'], $track['name']);
     if ($url) {
         echo $url, PHP_EOL;
