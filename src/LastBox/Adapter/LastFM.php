@@ -60,18 +60,25 @@ class LastFM
      * Retrieves loved tracks of the given user
      *
      * @param string $username Username
+     * @param int    $limit    The number of results to fetch per page
+     * @param int    $page     The page number to fetch
      *
      * @return array           Loved tracks
      * @throws RuntimeException
+     *
+     * @link http://last.fm/api/show/user.getLovedTracks
      */
-    public function getLovedTracks($username)
+    public function getLovedTracks($username, $limit, $page)
     {
         $api = $this->userApi;
+
         return $this->call(
-            function (lastfmApiUser $api) use ($username) {
+            function (lastfmApiUser $api) use ($username, $limit, $page) {
                 return $api->getLovedTracks(
                     array(
                         'user' => $username,
+                        'limit' => $limit,
+                        'page' => $page,
                     )
                 );
             },

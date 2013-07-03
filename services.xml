@@ -42,6 +42,11 @@
         <service id="repository" class="LastBox\Repository">
             <argument type="service" id="db"/>
         </service>
+        <service id="job.synchronize" class="LastBox\Job\Synchronize">
+            <argument type="service" id="lastfm.adapter"/>
+            <argument>%lastfm.username%</argument>
+            <argument type="service" id="repository"/>
+        </service>
     </services>
 
 </container>

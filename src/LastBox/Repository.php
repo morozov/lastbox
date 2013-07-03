@@ -31,12 +31,21 @@ SQL;
     {
         $sql = <<<SQL
 INSERT INTO
-    `track` (`id`, `artist`, `title`, `date`)
-VALUES (:id, :artist, :title, :date)
+    `track` (`id`, `mbid`, `artist`, `title`, `date`)
+VALUES (:id, :mbid, :artist, :title, :date)
 SQL;
 
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $this->pack($track['id']));
+
+        $id = $this->getID($track);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        if ($track['mbid']) {
+            $stmt->bindValue(':mbid', $this->formatMBID($track['mbid']));
+        } else {
+            $stmt->bindValue(':mbid', null, PDO::PARAM_NULL);
+        }
+
         $stmt->bindValue(':artist', $track['artist']);
         $stmt->bindValue(':title', $track['title']);
         $stmt->bindValue(':date', $track['date'], PDO::PARAM_INT);
@@ -75,7 +84,7 @@ WHERE
     id = :id
 SQL;
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $this->pack($id));
+        $stmt->bindValue(':id', $this->formatMBID($id));
         $stmt->bindValue(':status', $status, PDO::PARAM_INT);
         $stmt->bindValue(':url', $url);
         $stmt->execute();
@@ -112,12 +121,19 @@ WHERE
     id = :id
 SQL;
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $this->pack($id));
+        $stmt->bindValue(':id', $this->formatMBID($id));
         $stmt->bindValue(':status', $status, PDO::PARAM_INT);
         $stmt->execute();
     }
 
-    protected function pack($id)
+    protected function getID(array $track)
+    {
+        $baseString = $track['artist'] . '/' . $track['title'];
+        $id = crc32($baseString);
+        return $id;
+    }
+
+    protected function formatMBID($id)
     {
         return pack(
             'h*',

@@ -7,9 +7,9 @@ class LastFMTest extends PHPUnit_Framework_TestCase
 {
     public function testSuccess()
     {
-        $userApi = $this->getUserApiMockSuccess('TheUserName', 'TheResult');
+        $userApi = $this->getUserApiMockSuccess('TheUserName', 50, 1, 'TheResult');
         $adapter = $this->getAdapter($userApi);
-        $result = $adapter->getLovedTracks('TheUserName');
+        $result = $adapter->getLovedTracks('TheUserName', 50, 1);
 
         $this->assertEquals('TheResult', $result);
     }
@@ -23,7 +23,7 @@ class LastFMTest extends PHPUnit_Framework_TestCase
     {
         $userApi = $this->getUserApiMockFailure(123, 'TheDescription');
         $adapter = $this->getAdapter($userApi);
-        $result = $adapter->getLovedTracks(null);
+        $adapter->getLovedTracks(null, null, null);
     }
 
     private function getAuthApiMock()
@@ -66,7 +66,7 @@ class LastFMTest extends PHPUnit_Framework_TestCase
         return $adapter;
     }
 
-    private function getUserApiMockSuccess($username, $result)
+    private function getUserApiMockSuccess($username, $limit, $page, $result)
     {
         $userApi = $this->getUserApiMock();
         $userApi->expects($this->once())
@@ -74,6 +74,8 @@ class LastFMTest extends PHPUnit_Framework_TestCase
             ->with(
                 array(
                     'user' => $username,
+                    'limit' => $limit,
+                    'page' => $page,
                 )
             )
             ->will($this->returnValue($result));

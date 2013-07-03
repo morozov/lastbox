@@ -28,9 +28,13 @@ $vk = $container->get('vk.adapter');
 $dropbox = $container->get('dropbox.adapter');
 $repository = $container->get('repository');
 
-$tracks = $lastFM->getLovedTracks(
-    $container->getParameter('lastfm.username')
-);
+//$tracks = $lastFM->getLovedTracks('MorozovFM', 50, 20);
+//var_dump($tracks);
+//exit;
+
+$job = $container->get('job.synchronize');
+$job->run();
+exit;
 
 while ($track = array_shift($tracks)) {
     if ($track['mbid']) {
