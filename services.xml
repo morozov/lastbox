@@ -34,6 +34,14 @@
         <service id="dropbox.adapter" class="LastBox\Adapter\Dropbox">
             <argument type="service" id="dropbox.client"/>
         </service>
+        <service id="db" class="PDO">
+            <argument>%db.dsn%</argument>
+            <argument>%db.username%</argument>
+            <argument>%db.password%</argument>
+        </service>
+        <service id="repository" class="LastBox\Repository">
+            <argument type="service" id="db"/>
+        </service>
     </services>
 
 </container>
