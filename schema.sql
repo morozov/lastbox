@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `track`;
 CREATE TABLE `track` (
   `id` INT UNSIGNED NOT NULL,
   `mbid` BINARY(16) NULL,
+  `number` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `artist` varchar(64) NOT NULL,
   `title` varchar(64) NOT NULL,
   `date` INT UNSIGNED NOT NULL,
@@ -11,6 +12,7 @@ CREATE TABLE `track` (
   `url` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `mbid` (`mbid`),
+  KEY `number` (`number`),
   KEY `date` (`date`)
 ) CHARSET=utf8;
 

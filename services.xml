@@ -47,6 +47,14 @@
             <argument>%lastfm.username%</argument>
             <argument type="service" id="repository"/>
         </service>
+        <service id="job.resolve" class="LastBox\Job\Resolve">
+            <argument type="service" id="vk.adapter"/>
+            <argument type="service" id="repository"/>
+        </service>
+        <service id="job.upload" class="LastBox\Job\Upload">
+            <argument type="service" id="dropbox.adapter"/>
+            <argument type="service" id="repository"/>
+        </service>
     </services>
 
 </container>
